@@ -32,41 +32,52 @@ public class http_server{
 
                     System.out.println("--REQUEST--");
                     // System.out.println("Response Sent");
-                    // System.out.println(request);
+                    System.out.println(request);
 
                     OutputStream clientOutput = client.getOutputStream();
                     
                     // Decide how er'd like to respond
                     
                     // Change response based on route?
-
+                    
                     // Get the first line of the request
                     String firstLine = request.toString().split("\n")[0];
                     // Get the second thing "resource" from the first line (separated by spaces)
                     String resource = firstLine.split(" ")[1];
                     
-                    // compare the "resource" to our list of changes
-                    // sends back the appropriate thing based on resource
-                    if(resource.equals("/hello")){
-                        // Just send back a simple "Hello World"
-                        clientOutput.write("HTTP/1.1 200 OK\r\n".getBytes());
-                        clientOutput.write("\r\n".getBytes());
-                        clientOutput.write(("Hello World").getBytes());
-                    } else if(resource.equals("/image")){
-                        // Load the image from the filesystem
-                        // Send back an image
-                        FileInputStream image = new FileInputStream("image_for_http_response.jpg");
-                        System.out.println(image.toString());
-                        clientOutput.write("HTTP/1.1 200 OK\r\n".getBytes());
-                        clientOutput.write("\r\n".getBytes());
-                        clientOutput.write((image).readAllBytes());
-                        image.close();
-                    } else {
+                    String[] parts = firstLine.split("/");
+                    
+                    // implement the /echo/{str} endpoint, which accepts a string and returns it in the response body.
+                    if(parts.length > 1 && parts[1].equals("echo")){
+                        String customEndpoint = firstLine.split("/echo")[1];
+                        customEndpoint = customEndpoint.split(" ")[0];
                         clientOutput.write("HTTP/1.1 200 OK \r\n".getBytes());
                         clientOutput.write("\r\n".getBytes());
-                        clientOutput.write("What ya lookin at? ".getBytes());
+                        clientOutput.write(customEndpoint.getBytes());
+                        System.out.println("I'm in the custom endpoint");
+                    }else{
+                        if(resource.equals("/hello")){
+                            // Just send back a simple "Hello World"
+                            clientOutput.write("HTTP/1.1 200 OK\r\n".getBytes());
+                            clientOutput.write("\r\n".getBytes());
+                            clientOutput.write(("Hello World").getBytes());
+                        } else if(resource.equals("/image")){
+                            // Load the image from the filesystem
+                            // Send back an image
+                            FileInputStream image = new FileInputStream("image_for_http_response.jpg");
+                            System.out.println(image.toString());
+                            clientOutput.write("HTTP/1.1 200 OK\r\n".getBytes());
+                            clientOutput.write("\r\n".getBytes());
+                            clientOutput.write((image).readAllBytes());
+                            image.close();
+                        } else {
+                            clientOutput.write("HTTP/1.1 200 OK \r\n".getBytes());
+                            clientOutput.write("\r\n".getBytes());
+                            clientOutput.write("What ya lookin at? ".getBytes());
+                        }
                     }
-                // Get ready for the next message
+                    // System.out.println(customEndpoint);
+                    // Get ready for the next message
                     client.close();
                 }
             }

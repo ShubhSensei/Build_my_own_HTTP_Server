@@ -4,7 +4,7 @@ This project implements a basic HTTP server in Java, responding to three predefi
  * /image: Serves an image file (image_for_http_response.jpg) stored in the project directory.
  * For any other route: Responds with a generic "What ya lookin at?" message.
 ### Features:
- * Listens on port 8080 by default (can be customized).
+ * Listens on port `8080` by default (can be customized).
  * Handles basic HTTP GET requests.
  * Supports serving static content (image in this example).
 ### Getting Started:
@@ -24,5 +24,7 @@ Point your web browser to http://localhost:8080/ to see the default response. Ac
  * This is a basic implementation for educational purposes. It does not handle advanced features like security, complex request handling, or error handling.
 ### Further Development:
  * Implement routing for more dynamic content.
- * Explore advanced features like authentication, authorization, and request parameters.
+ * Embedding the Design Pattern for Low Latency, High Throughput and of course more Readability.
  * Enhance error handling for a more robust server.
+ * Explore advanced features like authentication, authorization, and request parameters.
+ * Refactor the code.

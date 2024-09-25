@@ -10,8 +10,9 @@ This project implements a basic HTTP server in Java, responding to three predefi
  * Supports serving static content (image in this example).
  * Factory design pattern is used for Loose coupling between moduels.
 
- ### Flow chart: (Login in Lucid chart is required)
- * Control Flow: (https://lucid.app/lucidchart/10d081e9-df99-448f-a975-0e9f87eb5094/edit?viewport_loc=-421%2C208%2C2031%2C993%2C0_0&invitationId=inv_49e714c9-f6c9-47ca-8b02-01c2ba66a47d) 
+ ### Flow chart:
+ * Control Flow:
+ ![alt text]({9A7465C9-F085-4A38-AB0C-F42913A8A38B}.png)
 
 ### Getting Started:
  * Prerequisites:

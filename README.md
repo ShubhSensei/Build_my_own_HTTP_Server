@@ -12,7 +12,10 @@ This project implements a basic HTTP server in Java, responding to three predefi
 
  ### Flow chart:
  * Control Flow:
- ![alt text]({9A7465C9-F085-4A38-AB0C-F42913A8A38B}.png)
+ ![alt text](httpServer.png)
+
+ * Control Flow after using Factory Pattern:
+ ![alt text](FactoryPattern/FactoryDesignDiagram.png)
 
 ### Getting Started:
  * Prerequisites:
@@ -34,8 +37,8 @@ Point your web browser to http://localhost:8080/ to see the default response. Ac
  * This is a basic implementation and does not handle advanced features like security, complex request handling, or error handling.
 
 ### Further Development:
- * Implement routing for more dynamic content.
+ * ✅Implement routing for more dynamic content.
  * ✅Embedding the Design Pattern for Low Latency, High Throughput and of course more Readability.
- * Enhance error handling for a more robust server.
- * Explore advanced features like Threading and error handling.
- * Refactor the code.
+ * ✅Enhance error handling for a more robust server.
+ * ✅Explore advanced features like Threading and error handling.
+ * ✅Refactor the code.

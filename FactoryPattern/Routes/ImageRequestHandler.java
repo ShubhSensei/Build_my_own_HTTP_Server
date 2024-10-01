@@ -6,20 +6,26 @@ import FactoryPattern.Requests.HttpRequest;
 import FactoryPattern.HttpRequestHandler;
 import FactoryPattern.Responses.HttpResponse;
 
-public class ImageRequestHandler implements HttpRequestHandler{
-
+/**
+ * Handles HTTP requests for the "/image" endpoint.
+ */
+public class ImageRequestHandler implements HttpRequestHandler {
     @Override
-    public HttpResponse handleRequest(HttpRequest request) throws Exception{
-        if(request.getMethod().equals("GET")){
-            FileInputStream image = new FileInputStream("image_for_http_response.jpg");
-            System.out.println(image.toString());
-            byte[] body = image.readAllBytes();
-            String StatusMessage = "HTTP/1.1 \r\n OK";
+    public HttpResponse handleRequest(HttpRequest request) throws Exception {
+        if (request.getMethod().equals("GET")) {
+            FileInputStream image = new FileInputStream("FactoryPattern/Routes/image.jpg");
+            byte[] imageData = image.readAllBytes();
             image.close();
-            return new HttpResponse(request.getVersion(), 200, StatusMessage, Collections.emptyMap(), body);
-        }else{
-            String StatusError = "HTTP/1.1 \r\n Method Not Allowed";
-            return new HttpResponse(request.getVersion(), 405, StatusError, Collections.emptyMap(), null);
+
+            String statusMessage = "HTTP/1.1 200 OK\r\n";
+            String contentType = "Content-Type: image/jpg\r\n";
+            String contentLength = "Content-Length: " + imageData.length + "\r\n";
+
+            String body = statusMessage + contentType + contentLength + "\r\n" + new String(imageData);
+
+            return new HttpResponse(request.getVersion(), 200, "OK", Collections.emptyMap(), body.getBytes());
+        } else {
+            return new HttpResponse(request.getVersion(), 405, "Method Not Allowed", Collections.emptyMap(), null);
         }
     }
 }

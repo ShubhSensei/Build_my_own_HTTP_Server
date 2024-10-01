@@ -103,7 +103,7 @@ public class http_server{
                         } else if(resource.equals("/image")){
                             // Load the image from the filesystem
                             // Send back an image
-                            FileInputStream image = new FileInputStream("image_for_http_response.jpg");
+                            FileInputStream image = new FileInputStream("FactoryPattern/Routes/image.jpg");
                             // System.out.println(image.toString());
                             clientOutput.write("HTTP/1.1 200 OK\r\n".getBytes());
                             clientOutput.write("\r\n".getBytes());

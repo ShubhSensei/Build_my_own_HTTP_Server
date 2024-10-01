@@ -1,7 +1,8 @@
 ## RoutesXplore : HTTP Server in Java
 This project implements a basic HTTP server in Java, responding to three predefined routes:
  * /hello: Returns a simple "Hello World" message.
- * /image: Serves an image file (image_for_http_response.jpg) stored in the project directory.
+ * /echo: Returns the "Hello {custom name}" message.
+ * /image: Serves an image file (image.jpg) stored in the project directory.
  * For any other route: Responds with a generic "What ya lookin at?" message.
 
 ### Features:
@@ -11,10 +12,10 @@ This project implements a basic HTTP server in Java, responding to three predefi
  * Factory design pattern is used for Loose coupling between moduels.
 
  ### Flow chart:
- * Control Flow:
- ![alt text](httpServer.png)
+ * Control Flow before using Design Pattern:
+<img src="httpServer.png" alt="Control Flow before using Design Pattern" width="400"/>
 
- * Control Flow after using Factory Pattern:
+ * Control Flow after using Design Pattern:
  ![alt text](FactoryPattern/FactoryDesignDiagram.png)
 
 ### Getting Started:

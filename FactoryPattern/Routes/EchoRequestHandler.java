@@ -4,6 +4,9 @@ import FactoryPattern.Requests.HttpRequest;
 import FactoryPattern.HttpRequestHandler;
 import FactoryPattern.Responses.HttpResponse;
 
+/**
+ * Handles HTTP requests for the "/echo" endpoint.
+ */
 public class EchoRequestHandler implements HttpRequestHandler{
     @Override
     public HttpResponse handleRequest(HttpRequest request) throws Exception{

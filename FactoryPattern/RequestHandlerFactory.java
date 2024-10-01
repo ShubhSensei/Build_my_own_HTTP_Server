@@ -1,25 +1,58 @@
 package FactoryPattern;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
 import FactoryPattern.Requests.HttpRequest;
-import FactoryPattern.Routes.DefaultRequestHandler;
-import FactoryPattern.Routes.HelloRequestHandler;
-import FactoryPattern.Routes.ImageRequestHandler;
+import FactoryPattern.Responses.HttpResponse;
+import FactoryPattern.Routes.*;
 
 public class RequestHandlerFactory {
-    public HttpRequestHandler createHandler(String path){
+
+    private final ExecutorService executorService;
+
+    public RequestHandlerFactory(ExecutorService executorService) {
+        this.executorService = executorService;
+    }
+
+    public Callable<HttpResponse> createHandler(HttpRequest request, String path){
         switch (path){
             case "/hello":
-                return (HttpRequestHandler) new HelloRequestHandler();
+                return () -> new HelloRequestHandler().handleRequest(request);
             case "/image":
-                return (HttpRequestHandler) new ImageRequestHandler();
+                return () -> new ImageRequestHandler().handleRequest(request);
+            case "/echo/":
+                return () -> new EchoRequestHandler().handleRequest(request);
             default:
-                return (HttpRequestHandler) new DefaultRequestHandler();
+                return () -> new DefaultRequestHandler().handleRequest(request);
         }
+    }
+
+    public Future<HttpResponse> submitRequest(HttpRequest request) throws Exception {
+        Callable<HttpResponse> handlerCallable = createHandler(request, request.getPath());
+        return executorService.submit(handlerCallable);
+    }
+
+    public void handleClientRequest(Socket clientSocket) throws Exception{
+
+        // Create a request object from the incoming socket
+        HttpRequest request = parse(new InputStreamReader(clientSocket.getInputStream()), clientSocket);
+
+        HttpRequestHandler handler = (HttpRequestHandler) createHandler(request, request.getPath());
+
+        // Handle the request and send the response
+        HttpResponse response = handler.handleRequest(request);
+
+        OutputStream outputStream = clientSocket.getOutputStream();
+
+        // outputStream.write("HTTP/1.1".getBytes());
+        outputStream.write(response.getBody());
+        clientSocket.close();
     }
 
     public static HttpRequest parse(InputStreamReader inputStreamReader, Socket client) throws Exception {

@@ -10,6 +10,10 @@ import java.util.concurrent.Future;
 import FactoryPattern.Requests.HttpRequest;
 import FactoryPattern.Responses.HttpResponse;
 
+/**
+ * Main class for the HTTP server. Listens for incoming connections on a specific port,
+ * creates a request handler based on the request path, and sends the response back to the client.
+ */
 public class MainHttpServer {
 
     public static void main(String[] args) throws Exception {
@@ -25,6 +29,7 @@ public class MainHttpServer {
 
                     HttpRequest request = RequestHandlerFactory.parse(new InputStreamReader(clientSocket.getInputStream()), clientSocket);
 
+                    // Submit the request to the factory for handling
                     Future<HttpResponse> futureResponse = factory.submitRequest(request);
                     HttpResponse response = futureResponse.get(); // Wait for the response
 

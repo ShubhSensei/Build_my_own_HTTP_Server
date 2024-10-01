@@ -12,14 +12,29 @@ import FactoryPattern.Requests.HttpRequest;
 import FactoryPattern.Responses.HttpResponse;
 import FactoryPattern.Routes.*;
 
+/**
+ * Factory class responsible for creating request handlers and submitting requests.
+ */
 public class RequestHandlerFactory {
 
     private final ExecutorService executorService;
 
+    /**
+     * Constructs a RequestHandlerFactory with the provided executor service.
+     *
+     * @param executorService the executor service for handling requests concurrently
+     */
     public RequestHandlerFactory(ExecutorService executorService) {
         this.executorService = executorService;
     }
 
+    /**
+     * Creates a Callable object that handles the request based on its path.
+     *
+     * @param request the HTTP request object
+     * @param path the request path
+     * @return a Callable that handles the request
+     */
     public Callable<HttpResponse> createHandler(HttpRequest request, String path){
         switch (path){
             case "/hello":
@@ -33,11 +48,22 @@ public class RequestHandlerFactory {
         }
     }
 
+    /**
+     * Submits a request for handling using the ExecutorService and returns a Future object.
+     * @param request The HttpRequest object to be handled.
+     * @return A Future object that can be used to retrieve the HttpResponse later.
+     * @throws Exception If there's an error during request processing.
+     */
     public Future<HttpResponse> submitRequest(HttpRequest request) throws Exception {
         Callable<HttpResponse> handlerCallable = createHandler(request, request.getPath());
         return executorService.submit(handlerCallable);
     }
 
+    /**
+     * Handles a client request by parsing the request, creating a handler, and sending the response.
+     * @param clientSocket The Socket object representing the client connection.
+     * @throws Exception If there's an error during request processing.
+     */
     public void handleClientRequest(Socket clientSocket) throws Exception{
 
         // Create a request object from the incoming socket
@@ -55,6 +81,13 @@ public class RequestHandlerFactory {
         clientSocket.close();
     }
 
+    /**
+     * Parses the request from the client socket and creates an HttpRequest object.
+     * @param inputStreamReader The InputStreamReader object for reading the request data.
+     * @param client The Socket object representing the client connection.
+     * @return An HttpRequest object containing the parsed request information.
+     * @throws Exception If there's an error during request parsing.
+     */
     public static HttpRequest parse(InputStreamReader inputStreamReader, Socket client) throws Exception {
         inputStreamReader = new InputStreamReader(client.getInputStream());
         BufferedReader reader = new BufferedReader(inputStreamReader);

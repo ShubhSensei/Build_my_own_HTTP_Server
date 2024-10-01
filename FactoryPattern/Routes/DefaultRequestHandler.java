@@ -4,8 +4,12 @@ import java.util.Collections;
 import FactoryPattern.Requests.HttpRequest;
 import FactoryPattern.HttpRequestHandler;
 import FactoryPattern.Responses.HttpResponse;
-public class DefaultRequestHandler implements HttpRequestHandler{
 
+/**
+ * Handles HTTP requests for the Default endpoint.
+ */
+public class DefaultRequestHandler implements HttpRequestHandler{
+    
     @Override
     public HttpResponse handleRequest(HttpRequest request) throws Exception{
         if(request.getMethod().equals("GET")){

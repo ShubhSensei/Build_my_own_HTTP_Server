@@ -4,8 +4,11 @@ import java.util.Collections;
 import FactoryPattern.Requests.HttpRequest;
 import FactoryPattern.HttpRequestHandler;
 import FactoryPattern.Responses.HttpResponse;
-public class HelloRequestHandler implements HttpRequestHandler{
 
+/**
+ * Handles HTTP requests for the "/hello" endpoint.
+ */
+public class HelloRequestHandler implements HttpRequestHandler{
     @Override
     public HttpResponse handleRequest(HttpRequest request) throws Exception{
         if(request.getMethod().equals("GET")){

@@ -1,5 +1,5 @@
 ## RoutesXplore : HTTP Server in Java
-This project implements a basic HTTP server in Java, responding to three predefined routes:
+This project implements an HTTP server in Java, responding to three predefined routes:
  * /hello: Returns a simple "Hello World" message.
  * /echo: Returns the "Hello {custom name}" message.
  * /image: Serves an image file (image.jpg) stored in the project directory.
